@@ -1,0 +1,304 @@
+
+DDL:
+
+CREATE , ALTER , DROP , TRUNCATE , RENAME
+
+
+Constraints: 
+PRIMARY KEY , FOREIGN KEY , NOT NULL , UNIQUE , CHECK 
+
+
+CREATE table Product (Pid  integer(3)  ,
+		      PName  varchar(20) ,
+		      Price   double(7,2) ,
+		      CONSTRAINT  product_pid_pk  PRIMARY KEY(pid)
+
+			 );
+
+ALTER
+======: 
+It is use to alter/modify structure of tables
+
+i. ADD  ii. MODIFY  iii. DROP iv. RENAME
+
+ALTER TABLE  Product ADD(dop Date);
+
+ALTER TABLE  Product  MODIFY Pname  varchar(30);
+
+
+
+mysql> use testdb;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_testdb |
++------------------+
+| employee         |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> desc employee;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| Eid    | int          | NO   | PRI | NULL    |       |
+| EName  | varchar(20)  | YES  |     | NULL    |       |
+| Salary | double(7,2)  | YES  |     | NULL    |       |
+| Comm   | decimal(7,0) | YES  |     | NULL    |       |
+| Job    | varchar(30)  | YES  |     | NULL    |       |
+| DOJ    | date         | YES  |     | NULL    |       |
+| Mid    | int          | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql>
+mysql> CREATE table Product (Pid  integer(3),
+    ->       PName  varchar(20) ,
+    ->       Price   double(7,2) ,
+    ->       CONSTRAINT  product_pid_pk  PRIMARY KEY(pid)
+    ->
+    ->  );
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+mysql> describe product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Pid   | int         | NO   | PRI | NULL    |       |
+| PName | varchar(20) | YES  |     | NULL    |       |
+| Price | double(7,2) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> ALTER TABLE  Product ADD(dop Date);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Pid   | int         | NO   | PRI | NULL    |       |
+| PName | varchar(20) | YES  |     | NULL    |       |
+| Price | double(7,2) | YES  |     | NULL    |       |
+| dop   | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> ALTER TABLE  Product  MODIFY Pname  varchar(30);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Pid   | int         | NO   | PRI | NULL    |       |
+| Pname | varchar(30) | YES  |     | NULL    |       |
+| Price | double(7,2) | YES  |     | NULL    |       |
+| dop   | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Product ADD(quantity  bigint(5));
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> describe product;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Pid      | int         | NO   | PRI | NULL    |       |
+| Pname    | varchar(30) | YES  |     | NULL    |       |
+| Price    | double(7,2) | YES  |     | NULL    |       |
+| dop      | date        | YES  |     | NULL    |       |
+| quantity | bigint      | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+mysql> describe product;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Pid      | int         | NO   | PRI | NULL    |       |
+| Pname    | varchar(30) | YES  |     | NULL    |       |
+| Price    | double(7,2) | YES  |     | NULL    |       |
+| dop      | date        | YES  |     | NULL    |       |
+| quantity | bigint      | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Product DROP COLUMN  quantity;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Pid   | int         | NO   | PRI | NULL    |       |
+| Pname | varchar(30) | YES  |     | NULL    |       |
+| Price | double(7,2) | YES  |     | NULL    |       |
+| dop   | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into  product  values(10,'Laptop',45000,'2025-01-01');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product(pid,pname)  values(20,'Mobile');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from product;
++-----+--------+----------+------------+
+| Pid | Pname  | Price    | dop        |
++-----+--------+----------+------------+
+|  10 | Laptop | 45000.00 | 2025-01-01 |
+|  20 | Mobile |     NULL | NULL       |
++-----+--------+----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into  product  values(30,'Toys',500,null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product values(40,'Books',2000,current_date)  , (50,'Keyboard',1500,current_date-1);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from product;
++-----+----------+----------+------------+
+| Pid | Pname    | Price    | dop        |
++-----+----------+----------+------------+
+|  10 | Laptop   | 45000.00 | 2025-01-01 |
+|  20 | Mobile   |     NULL | NULL       |
+|  30 | Toys     |   500.00 | NULL       |
+|  40 | Books    |  2000.00 | 2025-03-24 |
+|  50 | Keyboard |  1500.00 | 2025-03-23 |
++-----+----------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> TRUNCATE  TABLE Product;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from product;
+Empty set (0.00 sec)
+
+mysql> desc product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Pid   | int         | NO   | PRI | NULL    |       |
+| Pname | varchar(30) | YES  |     | NULL    |       |
+| Price | double(7,2) | YES  |     | NULL    |       |
+| dop   | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+mysql> RENAME  TABLE  product  to  product_info;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc product;
+ERROR 1146 (42S02): Table 'testdb.product' doesn't exist
+mysql> desc product_info;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Pid   | int         | NO   | PRI | NULL    |       |
+| Pname | varchar(30) | YES  |     | NULL    |       |
+| Price | double(7,2) | YES  |     | NULL    |       |
+| dop   | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table  product_info  RENAME COLUMN  pname TO product_name;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product_info;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Pid          | int         | NO   | PRI | NULL    |       |
+| product_name | varchar(30) | YES  |     | NULL    |       |
+| Price        | double(7,2) | YES  |     | NULL    |       |
+| dop          | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mydb               |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| testdb             |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> drop database mydb;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Customer(cid int(3) ,cname varchar(20) , address varchar(30) , pid integer(3)  references  product_info(pid) );
+
+
+
+mysql> desc product_info;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Pid          | int         | NO   | PRI | NULL    |       |
+| product_name | varchar(30) | YES  |     | NULL    |       |
+| Price        | double(7,2) | YES  |     | NULL    |       |
+| dop          | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into customer values(101,'smith','hyderabad',10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values(102,'tom','chennai',20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customer;
++------+-------+-----------+------+
+| cid  | cname | address   | pid  |
++------+-------+-----------+------+
+|  101 | smith | hyderabad |   50 |
+|  101 | smith | hyderabad |   10 |
+|  102 | tom   | chennai   |   20 |
++------+-------+-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> delete from customer  where pid = 50;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customer;
++------+-------+-----------+------+
+| cid  | cname | address   | pid  |
++------+-------+-----------+------+
+|  101 | smith | hyderabad |   10 |
+|  102 | tom   | chennai   |   20 |
++------+-------+-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from product_info;
++-----+--------------+----------+------------+
+| Pid | product_name | Price    | dop        |
++-----+--------------+----------+------------+
+|  10 | Laptop       | 55000.00 | 2025-03-24 |
+|  20 | Mobile       | 25000.00 | 2025-03-23 |
+|  30 | Books        |  2500.00 | 2025-02-12 |
++-----+--------------+----------+------------+
+3 rows in set (0.00 sec)
+
+
+

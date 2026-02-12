@@ -1,0 +1,310 @@
+mysql> select sum(salary) from Employee;
++-------------+
+| sum(salary) |
++-------------+
+|   341000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select   Avg(salary) as  Average from Employee;
++--------------+
+| Average      |
++--------------+
+| 37888.888889 |
++--------------+
+1 row in set (0.01 sec)
+
+mysql> select   count(*) from employee;
++----------+
+| count(*) |
++----------+
+|       10 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select   count(comm) from Employee;
++-------------+
+| count(comm) |
++-------------+
+|           4 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select min(salary)  from Employee;
++-------------+
+| min(salary) |
++-------------+
+|    22000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary)  from Employee;
++-------------+
+| max(salary) |
++-------------+
+|    50000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select  min(doj) from Employee;
++------------+
+| min(doj)   |
++------------+
+| 2020-12-01 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select  max(doj) from Employee;
++------------+
+| max(doj)   |
++------------+
+| 2025-03-26 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(salary) from Employee;
++-------------+
+| sum(salary) |
++-------------+
+|   341000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from Employee;
++-----+--------+----------+------+-----------+------------+------+
+| Eid | EName  | Salary   | Comm | Job       | DOJ        | Mid  |
++-----+--------+----------+------+-----------+------------+------+
+| 101 | King   | 50000.00 | NULL | President | 2020-12-01 | NULL |
+| 102 | Smith  | 45000.00 | NULL | Manager   | 2021-09-23 |  101 |
+| 103 | Ford   | 40000.00 | NULL | Manager   | 2022-04-15 |  101 |
+| 104 | Tom    | 30000.00 | 1500 | Developer | 2023-10-18 |  102 |
+| 105 | Scott  | 35000.00 | 1000 | Developer | 2023-12-25 |  102 |
+| 106 | Jerry  | 25000.00 | 3000 | Tester    | 2025-03-26 |  103 |
+| 107 | Ravi   | 22000.00 | 4000 | Tester    | 2025-03-25 |  103 |
+| 108 | Adam   | 47000.00 | NULL | Analyst   | 2024-01-01 |  101 |
+| 109 | javeed | 47000.00 | NULL | Manager   | 2024-01-01 |  101 |
+| 110 | anil   |     NULL | NULL | NULL      | 2024-01-19 | NULL |
++-----+--------+----------+------+-----------+------------+------+
+10 rows in set (0.00 sec)
+
+mysql> select sum(salary) from Employee  Group BY Job;
++-------------+
+| sum(salary) |
++-------------+
+|    50000.00 |
+|   132000.00 |
+|    65000.00 |
+|    47000.00 |
+|    47000.00 |
+|        NULL |
++-------------+
+6 rows in set (0.00 sec)
+
+mysql> select job , sum(salary) from Employee  Group BY Job;
++-----------+-------------+
+| job       | sum(salary) |
++-----------+-------------+
+| President |    50000.00 |
+| Manager   |   132000.00 |
+| Developer |    65000.00 |
+| Tester    |    47000.00 |
+| Analyst   |    47000.00 |
+| NULL      |        NULL |
++-----------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select job , sum(salary) from Employee ;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'testdb.Employee.Job'; this is incompatible with sql_mode=only_full_group_by
+mysql> select job , sum(salary) from Employee Group By JOb;
++-----------+-------------+
+| job       | sum(salary) |
++-----------+-------------+
+| President |    50000.00 |
+| Manager   |   132000.00 |
+| Developer |    65000.00 |
+| Tester    |    47000.00 |
+| Analyst   |    47000.00 |
+| NULL      |        NULL |
++-----------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select job from Employee  Group BY Job;
++-----------+
+| job       |
++-----------+
+| President |
+| Manager   |
+| Developer |
+| Tester    |
+| Analyst   |
+| NULL      |
++-----------+
+6 rows in set (0.00 sec)
+
+mysql> select mid from Employee  Group BY Job;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'testdb.Employee.Mid' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql>
+mysql>
+mysql> select job , sum(salary) from Employee  Group By sum(salary) ;
+ERROR 1056 (42000): Can't group on 'sum(salary)'
+mysql>
+mysql>
+mysql>
+mysql> select  sum(salary)  from Employee Group By Job;
++-------------+
+| sum(salary) |
++-------------+
+|    50000.00 |
+|   132000.00 |
+|    65000.00 |
+|    47000.00 |
+|    47000.00 |
+|        NULL |
++-------------+
+6 rows in set (0.00 sec)
+
+mysql> select  Job ,  sum(salary)  from Employee Group By Job;
++-----------+-------------+
+| Job       | sum(salary) |
++-----------+-------------+
+| President |    50000.00 |
+| Manager   |   132000.00 |
+| Developer |    65000.00 |
+| Tester    |    47000.00 |
+| Analyst   |    47000.00 |
+| NULL      |        NULL |
++-----------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select  Ename ,  sum(salary)  from Employee Group By Job;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'testdb.Employee.EName' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql>
+mysql>
+mysql>
+mysql> select sum(salary)  from Employee Group By  JOB , MID;
++-------------+
+| sum(salary) |
++-------------+
+|    50000.00 |
+|   132000.00 |
+|    65000.00 |
+|    47000.00 |
+|    47000.00 |
+|        NULL |
++-------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Employee;
++-----+--------+----------+------+-----------+------------+------+
+| Eid | EName  | Salary   | Comm | Job       | DOJ        | Mid  |
++-----+--------+----------+------+-----------+------------+------+
+| 101 | King   | 50000.00 | NULL | President | 2020-12-01 | NULL |
+| 102 | Smith  | 45000.00 | NULL | Manager   | 2021-09-23 |  101 |
+| 103 | Ford   | 40000.00 | NULL | Manager   | 2022-04-15 |  101 |
+| 104 | Tom    | 30000.00 | 1500 | Developer | 2023-10-18 |  102 |
+| 105 | Scott  | 35000.00 | 1000 | Developer | 2023-12-25 |  102 |
+| 106 | Jerry  | 25000.00 | 3000 | Tester    | 2025-03-26 |  103 |
+| 107 | Ravi   | 22000.00 | 4000 | Tester    | 2025-03-25 |  103 |
+| 108 | Adam   | 47000.00 | NULL | Analyst   | 2024-01-01 |  101 |
+| 109 | javeed | 47000.00 | NULL | Manager   | 2024-01-01 |  101 |
+| 110 | anil   |     NULL | NULL | NULL      | 2024-01-19 | NULL |
++-----+--------+----------+------+-----------+------------+------+
+10 rows in set (0.00 sec)
+
+mysql> select sum(salary) from Employee group by mid;
++-------------+
+| sum(salary) |
++-------------+
+|    50000.00 |
+|   179000.00 |
+|    65000.00 |
+|    47000.00 |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql> select  mid , sum(salary) from Employee group by mid;
++------+-------------+
+| mid  | sum(salary) |
++------+-------------+
+| NULL |    50000.00 |
+|  101 |   179000.00 |
+|  102 |    65000.00 |
+|  103 |    47000.00 |
++------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select    sum(salary) from Employee  ;
++-------------+
+| sum(salary) |
++-------------+
+|   341000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select    sum(salary) from Employee  where  job IN ('Manager','Developer')  group by job  ;
++-------------+
+| sum(salary) |
++-------------+
+|   132000.00 |
+|    65000.00 |
++-------------+
+2 rows in set (0.00 sec)
+
+mysql> select Job,    sum(salary) from Employee  where  job IN ('Manager','Developer')  group by job  ;
++-----------+-------------+
+| Job       | sum(salary) |
++-----------+-------------+
+| Manager   |   132000.00 |
+| Developer |    65000.00 |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select Job,    sum(salary) from Employee  where  job IN ('Manager','Developer','Tester')  group by job  ;
++-----------+-------------+
+| Job       | sum(salary) |
++-----------+-------------+
+| Manager   |   132000.00 |
+| Developer |    65000.00 |
+| Tester    |    47000.00 |
++-----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select Job,    sum(salary) from Employee  where  job IN ('Manager','Developer','Tester') and sum(salary) > 50000  group by job  ;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select Job,    sum(salary) from Employee                                                                                                       where  job IN ('Manager','Developer','Tester')                                                                                                      group by job  Having  sum(salary) > 50000 ;
++-----------+-------------+
+| Job       | sum(salary) |
++-----------+-------------+
+| Manager   |   132000.00 |
+| Developer |    65000.00 |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select Job,    sum(salary) from Employee                                                                                                       where  job IN ('Manager','Developer','Tester')                                                                                                      group by job  Having  sum(salary) > 50000   order by  job;
++-----------+-------------+
+| Job       | sum(salary) |
++-----------+-------------+
+| Developer |    65000.00 |
+| Manager   |   132000.00 |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+
+
+mysql> select Job,    sum(salary) from Employee                                                                                                       where  job IN ('Manager','Developer','Tester')                                                                                                      group by job  Having  sum(salary) > 50000   order by  sum(salary) desc ;
++-----------+-------------+
+| Job       | sum(salary) |
++-----------+-------------+
+| Manager   |   132000.00 |
+| Developer |    65000.00 |
++-----------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select Job,    sum(salary) from Employee                                                                                                       where  job IN ('Manager','Developer','Tester')                                                                                                      group by job  Having  sum(salary) > 50000   order by  sum(salary) asc ;
++-----------+-------------+
+| Job       | sum(salary) |
++-----------+-------------+
+| Developer |    65000.00 |
+| Manager   |   132000.00 |
++-----------+-------------+
+2 rows in set (0.00 sec)

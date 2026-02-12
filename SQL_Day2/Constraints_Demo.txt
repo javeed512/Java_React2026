@@ -1,0 +1,458 @@
+
+
+CREATE TABLE Student (
+   		 sid integer(4) primary key  ,
+		 sname varchar(20) NOT NULL  DEFAULT 'NOT GIVEN',
+		 dob  date ,
+		 mobileno  integer(10) UNIQUE  ,
+		 gender  char(1) ,
+ 		 CHECK (gender IN ('M','F') )	
+	
+		);
+
+
+
+ CREATE TABLE Course (
+		
+	 cid  integer(5) UNIQUE NOT NULL ,
+         cname  varchar(20) NOT NULL ,
+         fee    decimal(7) ,
+	 sid    integer(4)  references  student(sid) ,
+     CONSTRAINT  course_fee_cname_chk  CHECK (fee > 500 AND cname IN ('Java','Python','SQL')  	) 
+
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE Emp 
+(
+	eid integer  ,
+	ename varchar(20)  ,
+	salary double(7,2) ,
+	doj   date ,
+	 
+	 PRIMARY KEY (eid , ename)
+	
+);
+
+
+CREATE TABLE Dept 
+(
+
+	dno integer,
+	dname varchar(20) ,
+	location  varchar(20) ,
+	eid integer ,
+        ename varchar(20) ,
+
+	FOREIGN KEY(eid,ename) references Emp(eid, ename)
+
+
+);
+
+--------------------------------
+CREATE TABLE Persons (
+    ID int 	UNIQUE,
+    Name varchar(255) NOT NULL, 
+    Age int,
+    City varchar(255),
+    CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
+);
+CREATE TABLE Account (
+	acno int ,
+	type  varchar(20),
+	id  int ,
+	
+	FOREIGN KEY(id)  references  Persons(id)  ON DELETE CASCADE
+	
+);
+
+
+Notes on ALL Constrains:
+=============================
+
+
+mysql> CREATE TABLE Student (
+    ->     sid integer(4) primary key  auto_increment ,
+    ->  sname varchar(20) NOT NULL  DEFAULT 'NOT GIVEN',
+    ->  dob  date ,
+    ->  mobileno  integer(10) UNIQUE ,
+    ->  gender varchar(20)  CHECK gender IN ('M','F')
+    ->
+    ->
+    ->  );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'gender IN ('M','F')
+
+
+ )' at line 6
+mysql> CREATE TABLE Student (
+    ->     sid integer(4) primary key  auto_increment ,
+    ->  sname varchar(20) NOT NULL  DEFAULT 'NOT GIVEN',
+    ->  dob  date ,
+    ->  mobileno  integer(10) UNIQUE ,
+    ->  gender varchar(20) ,
+    ->   CHECK gender IN ('M','F')
+    ->
+    ->
+    ->  );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'gender IN ('M','F')
+
+
+ )' at line 7
+mysql> CREATE TABLE Student (
+    ->     sid integer(4) primary key  auto_increment ,
+    ->  sname varchar(20) NOT NULL  DEFAULT 'NOT GIVEN',
+    ->  dob  date ,
+    ->  mobileno  integer(10) UNIQUE ,
+    ->  gender varchar(20) ,
+    ->   CHECK (gender IN ('M','F') )
+    ->
+    ->
+    ->  );
+Query OK, 0 rows affected, 2 warnings (0.07 sec)
+
+mysql> insert into Student(dob,mobileno,gender) values('2001-12-08',9988776655,'X');
+ERROR 1264 (22003): Out of range value for column 'mobileno' at row 1
+mysql> insert into Student(dob,mobileno,gender) values('2001-12-08',44556677,'X');
+ERROR 3819 (HY000): Check constraint 'student_chk_1' is violated.
+mysql> insert into Student(dob,mobileno,gender) values('2001-12-08',44556677,'M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Student;
++-----+-----------+------------+----------+--------+
+| sid | sname     | dob        | mobileno | gender |
++-----+-----------+------------+----------+--------+
+|   1 | NOT GIVEN | 2001-12-08 | 44556677 | M      |
++-----+-----------+------------+----------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into Student(sname,dob,mobileno,gender) values('Tom','2001-08-23',66778844,'M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Student;
++-----+-----------+------------+----------+--------+
+| sid | sname     | dob        | mobileno | gender |
++-----+-----------+------------+----------+--------+
+|   1 | NOT GIVEN | 2001-12-08 | 44556677 | M      |
+|   2 | Tom       | 2001-08-23 | 66778844 | M      |
++-----+-----------+------------+----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> insert into Student(sname,dob,mobileno,gender) values('Smith','2004-10-02',66778844,'M');
+ERROR 1062 (23000): Duplicate entry '66778844' for key 'student.mobileno'
+mysql>  CREATE TABLE Course (
+    ->
+    ->  cid  integer(5) UNIQUE NOT NULL ,
+    ->          cname  varchar(20) NOT NULL ,
+    ->          fee    decimal(7) ,
+    ->  sid    integer(4)  references  student(sid) ,
+    ->          CHECK (fee > 500 AND cname IN ('Java','Python','SQL')  )
+    ->
+    ->
+    ->
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+mysql> desc course;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| cid   | int          | NO   | PRI | NULL    |       |
+| cname | varchar(20)  | NO   |     | NULL    |       |
+| fee   | decimal(7,0) | YES  |     | NULL    |       |
+| sid   | int          | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
++-----+-----------+------------+----------+--------+
+| sid | sname     | dob        | mobileno | gender |
++-----+-----------+------------+----------+--------+
+|   1 | NOT GIVEN | 2001-12-08 | 44556677 | M      |
+|   2 | Tom       | 2001-08-23 | 66778844 | M      |
++-----+-----------+------------+----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> insert into Course  values(201,'AIML',200,1);
+ERROR 3819 (HY000): Check constraint 'course_chk_1' is violated.
+mysql> insert into Course  values(201,'Java',200,1);
+ERROR 3819 (HY000): Check constraint 'course_chk_1' is violated.
+mysql> insert into Course  values(201,'Java',500,1);
+ERROR 3819 (HY000): Check constraint 'course_chk_1' is violated.
+mysql> insert into Course  values(201,'Java',900,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++-----+-----------+------------+----------+--------+
+| sid | sname     | dob        | mobileno | gender |
++-----+-----------+------------+----------+--------+
+|   1 | NOT GIVEN | 2001-12-08 | 44556677 | M      |
+|   2 | Tom       | 2001-08-23 | 66778844 | M      |
++-----+-----------+------------+----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from course;
++-----+-------+------+------+
+| cid | cname | fee  | sid  |
++-----+-------+------+------+
+| 201 | Java  |  900 |    1 |
++-----+-------+------+------+
+1 row in set (0.00 sec)
+
+mysql> delete from student where sid =1;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++-----+-------+------------+----------+--------+
+| sid | sname | dob        | mobileno | gender |
++-----+-------+------------+----------+--------+
+|   2 | Tom   | 2001-08-23 | 66778844 | M      |
++-----+-------+------------+----------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from course;
++-----+-------+------+------+
+| cid | cname | fee  | sid  |
++-----+-------+------+------+
+| 201 | Java  |  900 |    1 |
++-----+-------+------+------+
+1 row in set (0.00 sec)
+
+mysql>    CREATE TABLE Emp
+    -> (
+    -> eid integer  ,
+    -> ename varchar(20)  ,
+    -> salary double(7,2) ,
+    -> doj   date ,
+    ->
+    ->  PRIMARY KEY (eid , ename)
+    ->
+    -> );
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> desc emp;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| eid    | int         | NO   | PRI | NULL    |       |
+| ename  | varchar(20) | NO   | PRI | NULL    |       |
+| salary | double(7,2) | YES  |     | NULL    |       |
+| doj    | date        | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Dept
+    -> (
+    ->
+    -> dno integer,
+    -> dname varchar(20) ,
+    -> location  varchar(20) ,
+    -> eid integer ,
+    ->         ename varchar(20) ,
+    ->
+    -> FOREIGN KEY(eid,ename) references Emp(eid, ename)
+    ->
+    ->
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> desc dept;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| dno      | int         | YES  |     | NULL    |       |
+| dname    | varchar(20) | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
+| eid      | int         | YES  | MUL | NULL    |       |
+| ename    | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Emp;
+Empty set (0.00 sec)
+
+mysql> select * from dept;
+Empty set (0.00 sec)
+
+mysql> insert into Emp  values(101,'King',90000,current_date);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Emp  values(102,'Ford',50000,current_date-1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Emp  values(103,'Javeed',30000,current_date-4);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp;
++-----+--------+----------+------------+
+| eid | ename  | salary   | doj        |
++-----+--------+----------+------------+
+| 101 | King   | 90000.00 | 2025-03-25 |
+| 102 | Ford   | 50000.00 | 2025-03-24 |
+| 103 | Javeed | 30000.00 | 2025-03-21 |
++-----+--------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into dept values(10,'Development','Hyderabad',101,'King');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into dept values(20,'Testing','Pune',102,'Fox');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`testdb`.`dept`, CONSTRAINT `dept_ibfk_1` FOREIGN KEY (`eid`, `ename`) REFERENCES `emp` (`eid`, `ename`))
+mysql> insert into dept values(20,'Testing','Pune',102,'Ford');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from DEPT;
++------+-------------+-----------+------+-------+
+| dno  | dname       | location  | eid  | ename |
++------+-------------+-----------+------+-------+
+|   10 | Development | Hyderabad |  101 | King  |
+|   20 | Testing     | Pune      |  102 | Ford  |
++------+-------------+-----------+------+-------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Persons (
+    ->     ID int UNIQUE,
+    ->     Name varchar(255) NOT NULL,
+    ->     Age int,
+    ->     City varchar(255),
+    ->     CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> DESC persons;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| ID    | int          | YES  | UNI | NULL    |       |
+| Name  | varchar(255) | NO   |     | NULL    |       |
+| Age   | int          | YES  |     | NULL    |       |
+| City  | varchar(255) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Account (
+    -> acno int ,
+    -> type  varchar(20),
+    -> id  int ,
+    ->
+    -> FOREIGN KEY(id)  references  Persons(id)  ON DELETE CASCADE
+    ->
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql>
+mysql> desc account;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| acno  | int         | YES  |     | NULL    |       |
+| type  | varchar(20) | YES  |     | NULL    |       |
+| id    | int         | YES  | MUL | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into Persons values(11,'bhavya',20,'Sandnes');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Persons values(12,'Dharshini',21,'Sandnes');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Persons values(13,'RajaLamxmi',22,'Sandnes');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from persons;
++------+------------+------+---------+
+| ID   | Name       | Age  | City    |
++------+------------+------+---------+
+|   11 | bhavya     |   20 | Sandnes |
+|   12 | Dharshini  |   21 | Sandnes |
+|   13 | RajaLamxmi |   22 | Sandnes |
++------+------------+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into account values(1001,'saving',11);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into account values(1002,'saving',12);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into account values(1003,'salary',13);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from account;
++------+--------+------+
+| acno | type   | id   |
++------+--------+------+
+| 1001 | saving |   11 |
+| 1002 | saving |   12 |
+| 1003 | salary |   13 |
++------+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> insert into account values(1004,'houseloan',20);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`testdb`.`account`, CONSTRAINT `account_ibfk_1` FOREIGN KEY (`id`) REFERENCES `persons` (`ID`) ON DELETE CASCADE)
+mysql> delete from  persons  id = 11;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 11' at line 1
+mysql> delete from  persons where  id = 11;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from persons;
++------+------------+------+---------+
+| ID   | Name       | Age  | City    |
++------+------------+------+---------+
+|   12 | Dharshini  |   21 | Sandnes |
+|   13 | RajaLamxmi |   22 | Sandnes |
++------+------------+------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from account;
++------+--------+------+
+| acno | type   | id   |
++------+--------+------+
+| 1002 | saving |   12 |
+| 1003 | salary |   13 |
++------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> insert into account values(1005,'current account',null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from account;
++------+-----------------+------+
+| acno | type            | id   |
++------+-----------------+------+
+| 1002 | saving          |   12 |
+| 1003 | salary          |   13 |
+| 1005 | current account | NULL |
++------+-----------------+------+
+3 rows in set (0.00 sec)
+
+mysql> desc product_info;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Pid          | int         | NO   | PRI | NULL    |       |
+| product_name | varchar(30) | YES  |     | NULL    |       |
+| Price        | double(7,2) | YES  |     | NULL    |       |
+| dop          | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+
+
+
+

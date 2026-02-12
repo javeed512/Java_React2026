@@ -1,0 +1,279 @@
+CREATE TABLE Student (
+   		 sid integer(4) primary key  auto_increment ,
+		 sname varchar(20) NOT NULL  DEFAULT 'NOT GIVEN',
+		 dob  date ,
+		 mobileno  integer(10) UNIQUE  ,
+		 gender varchar(20) ,
+ 		 CHECK (gender IN ('M','F') )		
+		 
+  
+ );
+
+DML:
+
+insert , update , delete
+
+INSERT:
+
+mysql> insert into Student values(101,'Satish','2002-01-09',44556677,'M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Student;
++-----+--------+------------+----------+--------+
+| sid | sname  | dob        | mobileno | gender |
++-----+--------+------------+----------+--------+
+|   2 | Tom    | 2001-08-23 | 66778844 | M      |
+| 101 | Satish | 2002-01-09 | 44556677 | M      |
++-----+--------+------------+----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> insert into Student values(102,'Raju','2002-12-03',99887766,'M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into  Student(sid,sname,dob,gender)  values(103,'Adam','2004-01-06','M');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Student;
++-----+--------+------------+----------+--------+
+| sid | sname  | dob        | mobileno | gender |
++-----+--------+------------+----------+--------+
+|   2 | Tom    | 2001-08-23 | 66778844 | M      |
+| 101 | Satish | 2002-01-09 | 44556677 | M      |
+| 102 | Raju   | 2002-12-03 | 99887766 | M      |
+| 103 | Adam   | 2004-01-06 |     NULL | M      |
++-----+--------+------------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> insert into Student values(104,'Scott','2002-07-13',44553322,'M') , (105,'Ford','2002-04-24',44332211,'M');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+
+UPDATE:
+------
+
+update  Student  set  mobileno = 33221144 , dob = '2004-01-01' where sid = 103;
+
+
+
+
+
+
+
+TCL:  Transaction Control Language
+-----------------------------------
+
+COMMIT  , SAVEPOINT , ROLLBACK
+
+start transaction;
+
+INSERT1;
+INSERT2;
+
+UPDATE1;
+UPDATE2;
+
+DELETE1;
+
+COMMIT  OR ROLLBACK;
+
+
+
+mysql> ALTER TABLE Student ADD  City varchar(20);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++----------+-------------+------+-----+-----------+----------------+
+| Field    | Type        | Null | Key | Default   | Extra          |
++----------+-------------+------+-----+-----------+----------------+
+| sid      | int         | NO   | PRI | NULL      | auto_increment |
+| sname    | varchar(20) | NO   |     | NOT GIVEN |                |
+| dob      | date        | YES  |     | NULL      |                |
+| mobileno | int         | YES  | UNI | NULL      |                |
+| gender   | varchar(20) | YES  |     | NULL      |                |
+| City     | varchar(20) | YES  |     | NULL      |                |
++----------+-------------+------+-----+-----------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Student;
++-----+--------+------------+----------+--------+------+
+| sid | sname  | dob        | mobileno | gender | City |
++-----+--------+------------+----------+--------+------+
+|   2 | Tom    | 2001-08-23 | 66778844 | M      | NULL |
+| 101 | Satish | 2002-01-09 | 44556677 | M      | NULL |
+| 102 | Raju   | 2002-12-03 | 99887766 | M      | NULL |
+| 103 | Adam   | 2004-01-01 | 33221144 | M      | NULL |
+| 104 | Scott  | 2002-07-13 | 44553322 | M      | NULL |
+| 105 | Ford   | 2002-04-24 | 44332211 | M      | NULL |
++-----+--------+------------+----------+--------+------+
+6 rows in set (0.00 sec)
+
+mysql> update  Student  set city = 'Delhi';
+Query OK, 6 rows affected (0.01 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> select * from Student;
++-----+--------+------------+----------+--------+-------+
+| sid | sname  | dob        | mobileno | gender | City  |
++-----+--------+------------+----------+--------+-------+
+|   2 | Tom    | 2001-08-23 | 66778844 | M      | Delhi |
+| 101 | Satish | 2002-01-09 | 44556677 | M      | Delhi |
+| 102 | Raju   | 2002-12-03 | 99887766 | M      | Delhi |
+| 103 | Adam   | 2004-01-01 | 33221144 | M      | Delhi |
+| 104 | Scott  | 2002-07-13 | 44553322 | M      | Delhi |
+| 105 | Ford   | 2002-04-24 | 44332211 | M      | Delhi |
++-----+--------+------------+----------+--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> delete from student where  sid = 2;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Student;
++-----+--------+------------+----------+--------+-------+
+| sid | sname  | dob        | mobileno | gender | City  |
++-----+--------+------------+----------+--------+-------+
+| 101 | Satish | 2002-01-09 | 44556677 | M      | Delhi |
+| 102 | Raju   | 2002-12-03 | 99887766 | M      | Delhi |
+| 103 | Adam   | 2004-01-01 | 33221144 | M      | Delhi |
+| 104 | Scott  | 2002-07-13 | 44553322 | M      | Delhi |
+| 105 | Ford   | 2002-04-24 | 44332211 | M      | Delhi |
++-----+--------+------------+----------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from Student;
++-----+--------+------------+----------+--------+-------+
+| sid | sname  | dob        | mobileno | gender | City  |
++-----+--------+------------+----------+--------+-------+
+| 101 | Satish | 2002-01-09 | 44556677 | M      | Delhi |
+| 102 | Raju   | 2002-12-03 | 99887766 | M      | Delhi |
+| 103 | Adam   | 2004-01-01 | 33221144 | M      | Delhi |
+| 104 | Scott  | 2002-07-13 | 44553322 | M      | Delhi |
+| 105 | Ford   | 2002-04-24 | 44332211 | M      | Delhi |
++-----+--------+------------+----------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> begin transaction;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'transaction' at line 1
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>  insert into  student values(106,'Tom','2000-10-27',886644,'M','Hyderabad');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++-----+--------+------------+----------+--------+-----------+
+| sid | sname  | dob        | mobileno | gender | City      |
++-----+--------+------------+----------+--------+-----------+
+| 101 | Satish | 2002-01-09 | 44556677 | M      | Delhi     |
+| 102 | Raju   | 2002-12-03 | 99887766 | M      | Delhi     |
+| 103 | Adam   | 2004-01-01 | 33221144 | M      | Delhi     |
+| 104 | Scott  | 2002-07-13 | 44553322 | M      | Delhi     |
+| 105 | Ford   | 2002-04-24 | 44332211 | M      | Delhi     |
+| 106 | Tom    | 2000-10-27 |   886644 | M      | Hyderabad |
++-----+--------+------------+----------+--------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from student;
++-----+--------+------------+----------+--------+-------+
+| sid | sname  | dob        | mobileno | gender | City  |
++-----+--------+------------+----------+--------+-------+
+| 101 | Satish | 2002-01-09 | 44556677 | M      | Delhi |
+| 102 | Raju   | 2002-12-03 | 99887766 | M      | Delhi |
+| 103 | Adam   | 2004-01-01 | 33221144 | M      | Delhi |
+| 104 | Scott  | 2002-07-13 | 44553322 | M      | Delhi |
+| 105 | Ford   | 2002-04-24 | 44332211 | M      | Delhi |
++-----+--------+------------+----------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>  insert into  student values(106,'Tom','2000-10-27',886644,'M','Hyderabad');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from student;
++-----+--------+------------+----------+--------+-----------+
+| sid | sname  | dob        | mobileno | gender | City      |
++-----+--------+------------+----------+--------+-----------+
+| 101 | Satish | 2002-01-09 | 44556677 | M      | Delhi     |
+| 102 | Raju   | 2002-12-03 | 99887766 | M      | Delhi     |
+| 103 | Adam   | 2004-01-01 | 33221144 | M      | Delhi     |
+| 104 | Scott  | 2002-07-13 | 44553322 | M      | Delhi     |
+| 105 | Ford   | 2002-04-24 | 44332211 | M      | Delhi     |
+| 106 | Tom    | 2000-10-27 |   886644 | M      | Hyderabad |
++-----+--------+------------+----------+--------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete  from student;
+Query OK, 6 rows affected (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from student;
++-----+--------+------------+----------+--------+-----------+
+| sid | sname  | dob        | mobileno | gender | City      |
++-----+--------+------------+----------+--------+-----------+
+| 101 | Satish | 2002-01-09 | 44556677 | M      | Delhi     |
+| 102 | Raju   | 2002-12-03 | 99887766 | M      | Delhi     |
+| 103 | Adam   | 2004-01-01 | 33221144 | M      | Delhi     |
+| 104 | Scott  | 2002-07-13 | 44553322 | M      | Delhi     |
+| 105 | Ford   | 2002-04-24 | 44332211 | M      | Delhi     |
+| 106 | Tom    | 2000-10-27 |   886644 | M      | Hyderabad |
++-----+--------+------------+----------+--------+-----------+
+6 rows in set (0.00 sec)
+
+
+SAVEPOINT:
+------------
+
+start  transaction;
+
+INSERT1
+INSERT2
+INSERT3
+INSERT4
+
+
+SAVEPOINT S1;
+
+UPDATE1
+UPDATE2
+UPDATE3
+
+SAVEPOINT S2;
+
+DELETE1;
+
+rollback  S1; OR
+
+commit s2;
+
+COMMIT > SAVEPOINT > ROLLBACK
+
+
+
+
+
+
+
+
