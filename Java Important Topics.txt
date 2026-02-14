@@ -1,0 +1,12 @@
+Java Important Topics:
+
+1. OOPs
+2. POJO Class
+3. Collections 
+	ArrayList , HashSet,TreeSet , HashMap,TreeMap , Properties(how to read data from property)
+4. Arrays (1D ,2D) 
+5. String API and StringBuffer API 
+6. Java8 Features
+   Functional Interface , default and static methods , Lambda Exp , java.time package , Stream API 
+7. JDBC  CRUD  with PreparedStatement
+8. Exception Handling basics

@@ -1,0 +1,18 @@
+
+
+CRUD 
+
+C - create/insert record
+R - Retrieve  / fetch records
+U - Update record
+D - Delete record
+
+
+INSERT  ---> insert into EmployeeInfo(eid,ename,salary)  values(?,?,?);
+UPDATE ----> update EmployeeInfo set ename = ? , salary = ? where eid = ?;
+
+
+SELECT BY EID  --->  select * from EmployeeInfo  where eid =?;
+DELETE BY EID ----->  delete from EmployeeInfo  where eid = ?;
+
+SELECT ALL --->  select * from EmployeeInfo;

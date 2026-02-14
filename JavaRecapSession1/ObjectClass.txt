@@ -1,0 +1,30 @@
+
+
+
+class Object {
+
+
+
+	public Object(){
+
+		// create object/instance
+		// generate hashcode
+		// create copy of instance variables and initialize default values
+		// allocate memory in Heap
+		 
+
+	}
+ 
+	wait() , notify() , notifyAll()
+	getClassName()
+	equals() // it compares references or hashcodes
+	hashcode()
+	toString() // print hashcode
+
+
+
+
+
+
+
+}
