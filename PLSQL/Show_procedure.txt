@@ -1,0 +1,9 @@
+SELECT
+    specific_name AS procedure_name,
+    routine_schema AS database_name,
+    created AS creation_time
+FROM
+    information_schema.ROUTINES
+WHERE
+    routine_type = 'PROCEDURE' AND
+    routine_schema = 'mydb';

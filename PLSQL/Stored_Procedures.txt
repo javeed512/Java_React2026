@@ -184,11 +184,11 @@ END
 ================================================
 CREATE  PROCEDURE `While_Demo`(IN id int)
 BEGIN
-DECLARE  count  int default 0;
+DECLARE  count  int default 3;
 DECLARE   name  varchar(30);
 DECLARE   list  varchar(250) default '';
 
-	 WHILE  count < 10  DO
+	 WHILE  count < 6  DO
 		
 			SELECT ename INTO  name  from Employees where eid = id + count;
 		    #select name;
@@ -243,21 +243,14 @@ Note: We should use DETERMINISTIC in functions to return value else it will use
 
 Example:
 
-CREATE FUNCTION `func_demo`(id int ) RETURNS int
-    DETERMINISTIC
-BEGIN
-DECLARE data int;
-
-select  salary  INTO data from employee where eid = id;
-
-RETURN data;
-END
 
 
 
 Note: Use select keyword to execute functions.
 
 Ex:  select  func_demo(101);
+
+
 
 
 
@@ -319,14 +312,6 @@ ORDER BY ename;
 
 
 select * from EMP_INFO;
-
-
-
-
-
-
-
-
 
 
 
