@@ -1,0 +1,39 @@
+<%@ page language="java"    isELIgnored="false"   contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Display jsp page</h1>
+
+	
+  JSP Scriptlet: <br>
+	<% 
+	
+		String  city = (String)	session.getAttribute("city");
+		
+		out.print(city);
+	
+	%>
+	
+	<br>
+
+	JSP Expression : <br>
+	
+	<%=  session.getAttribute("city") %>
+	
+	<br>
+	
+	EL Expression: <br>
+	
+	${ city }  <br>
+	
+	${ username }
+	
+
+
+</body>
+</html>
