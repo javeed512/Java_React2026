@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+   
+
+		<bean id="emp"  class="com.hexaware.springxml.bean.Employee" scope="singleton">
+
+		<property name="eid"  value="101"></property>
+		<property name="ename" value="King"></property>
+		<property name="salary" value="75000"></property>
+		<property name="addr" ref="a1"></property>
+	
+		</bean>
+		
+		
+		<!-- 
+		<bean id="emp2"  class="com.hexaware.springxml.bean.Employee">
+
+		<property name="eid"  value="102"></property>
+		<property name="ename" value="tom"></property>
+		<property name="salary" value="25000"></property>
+		<property name="addr" ref="a1"></property>
+	
+		</bean> -->
+
+
+	  <bean id="a1" class="com.hexaware.springxml.bean.Address"  scope="prototype">
+	  
+	  		<property name="city" value="Hyderabad"></property>
+	  
+	  
+	  
+	  </bean>
+
+
+</beans>
