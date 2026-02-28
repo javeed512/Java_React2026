@@ -1,0 +1,1 @@
+select  columns …  from tables...  where   … group by …  having … order by;

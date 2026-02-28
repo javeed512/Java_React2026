@@ -1,0 +1,8 @@
+[32m2026-02-28 15:59:45.868[0;39m [INFO] com.hexaware.springrestcrud.SpringRestapiCrudApplication [main] Starting SpringRestapiCrudApplication using Java 21.0.4 with PID 24364 (D:\2025_JavaFSD_Hexaware\hexaware_react_2025\Spring_Logging\spring-restapi-crud\target\classes started by T14 in D:\2025_JavaFSD_Hexaware\hexaware_react_2025\Spring_Logging\spring-restapi-crud)
+[32m2026-02-28 15:59:45.871[0;39m [DEBUG] com.hexaware.springrestcrud.SpringRestapiCrudApplication [main] Running with Spring Boot v3.4.8, Spring v6.2.9
+[32m2026-02-28 15:59:45.872[0;39m [INFO] com.hexaware.springrestcrud.SpringRestapiCrudApplication [main] No active profile set, falling back to 1 default profile: "default"
+[32m2026-02-28 15:59:50.099[0;39m [INFO] com.hexaware.springrestcrud.SpringRestapiCrudApplication [main] Started SpringRestapiCrudApplication in 4.58 seconds (process running for 5.298)
+[32m2026-02-28 15:59:50.103[0;39m [INFO] com.hexaware.springrestcrud.SpringRestapiCrudApplication [main] application terminated..
+[32m2026-02-28 16:01:47.609[0;39m [INFO] com.hexaware.springrestcrud.controller.EmployeeRestController [http-nio-8080-exec-9] rest api to insert employee object executed at rest controller
+[32m2026-02-28 16:01:47.627[0;39m [INFO] com.hexaware.springrestcrud.service.EmployeeServiceImp [http-nio-8080-exec-9] addEmp() executed in Service Layer
+[32m2026-02-28 16:03:34.705[0;39m [INFO] com.hexaware.springrestcrud.service.EmployeeServiceImp [http-nio-8080-exec-1] addEmp() executed in Service Layer
