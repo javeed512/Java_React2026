@@ -1,0 +1,26 @@
+
+
+<!DOCTYPE html>
+<html>
+<body>
+<h1>JavaScript Functions</h1>
+<h2>The setTimeout() Method</h2>
+
+<p>Wait 3 seconds (3000 milliseconds) for this page to change.</p>
+
+<h2 id="demo"></h2>
+
+<script>
+setTimeout(myFunction, 3000);
+
+function myFunction() {
+  document.getElementById("demo").innerHTML = "I love India !!";
+}
+
+setTimeout( ()=>{ document.getElementById("demo").innerHTML = "Hi I am callback func";  } , 5000)
+
+
+</script>
+
+</body>
+</html>
