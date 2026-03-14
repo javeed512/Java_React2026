@@ -30,7 +30,7 @@ state in class component can be declare or initialize in 2 ways.
 1. inside constructor
 2. inside class by using setState()
 
-
+	
 class Student extends Component{
 
 constructor(props)
